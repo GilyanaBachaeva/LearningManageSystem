@@ -13,11 +13,12 @@ import org.springframework.stereotype.Service;
 public class TeacherService {
 
     private final TeacherRepository teacherRepository;
+    private final TeacherMapper teacherMapper;
 
     public TeacherDTO addTeacher(TeacherDTO teacherDTO) {
-        Teacher teacher = TeacherMapper.INSTANCE.teacherDTOToTeacher(teacherDTO);
+        Teacher teacher = teacherMapper.map(teacherDTO);
         Teacher savedTeacher = teacherRepository.save(teacher);
-        return TeacherMapper.INSTANCE.teacherToTeacherDTO(savedTeacher);
+        return teacherMapper.map(savedTeacher);
     }
 
     public void deleteTeacher(Long id) {
@@ -34,13 +35,13 @@ public class TeacherService {
         teacher.setFirstName(teacherDTO.getFirstName());
         teacher.setLastName(teacherDTO.getLastName());
         Teacher updatedTeacher = teacherRepository.save(teacher);
-        return TeacherMapper.INSTANCE.teacherToTeacherDTO(updatedTeacher);
+        return teacherMapper.map(updatedTeacher);
     }
 
     public TeacherDTO getTeacherById(Long id) {
         Teacher teacher = teacherRepository.findById(id)
                 .orElseThrow(() -> new TeacherNotFoundException("Teacher with id " + id + " not found."));
 
-        return TeacherMapper.INSTANCE.teacherToTeacherDTO(teacher);
+        return teacherMapper.map(teacher);
     }
 }

@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TeacherController {
 
-    @Autowired
-    private TeacherService teacherService;
+    final TeacherService teacherService;
 
     public ResponseEntity<TeacherDTO> addTeacher(@RequestBody TeacherDTO teacherDTO) {
         TeacherDTO createdTeacher = teacherService.addTeacher(teacherDTO);

@@ -4,15 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeacherDTO {
+public class GroupDTO {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String name;
+    private Set<Long> studentIds;
 }
+

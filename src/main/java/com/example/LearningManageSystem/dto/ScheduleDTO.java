@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeacherDTO {
+public class ScheduleDTO {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Long groupId;
+    private Long teacherId;
+    private Long courseId;
+    private LocalDateTime date;
 }
+

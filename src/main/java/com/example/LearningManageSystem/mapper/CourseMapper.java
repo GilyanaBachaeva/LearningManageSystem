@@ -1,9 +1,9 @@
 package com.example.LearningManageSystem.mapper;
 
 import com.example.LearningManageSystem.dto.CourseDTO;
-import com.example.LearningManageSystem.model.Course;
+import com.example.LearningManageSystem.model.CourseEntity;
 
 public interface CourseMapper {
-    CourseDTO map(Course course);
-    Course map(CourseDTO courseDTO);
+    CourseDTO map(CourseEntity course);
+    CourseEntity map(CourseDTO courseDTO);
 }

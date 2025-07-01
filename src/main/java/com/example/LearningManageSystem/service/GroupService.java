@@ -4,7 +4,7 @@ import com.example.LearningManageSystem.dao.GroupRepository;
 import com.example.LearningManageSystem.dto.GroupDTO;
 import com.example.LearningManageSystem.exception.GroupNotFoundException;
 import com.example.LearningManageSystem.mapper.GroupMapper;
-import com.example.LearningManageSystem.model.Group;
+import com.example.LearningManageSystem.model.GroupEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +18,8 @@ public class GroupService {
     private final GroupMapper groupMapper;
 
     public GroupDTO addGroup(GroupDTO groupDTO) {
-        Group group = groupMapper.map(groupDTO);
-        Group savedGroup = groupRepository.save(group);
+        GroupEntity group = groupMapper.map(groupDTO);
+        GroupEntity savedGroup = groupRepository.save(group);
         return groupMapper.map(savedGroup);
     }
 
@@ -31,17 +31,17 @@ public class GroupService {
     }
 
     public GroupDTO updateGroup(Long id, GroupDTO groupDTO) {
-        Group group = groupRepository.findById(id)
+        GroupEntity group = groupRepository.findById(id)
                 .orElseThrow(() -> new GroupNotFoundException("Group with id " + id + " not found."));
 
         group.setName(groupDTO.getName());
 
-        Group updatedGroup = groupRepository.save(group);
+        GroupEntity updatedGroup = groupRepository.save(group);
         return groupMapper.map(updatedGroup);
     }
 
     public GroupDTO getGroupById(Long id) {
-        Group group = groupRepository.findById(id)
+        GroupEntity group = groupRepository.findById(id)
                 .orElseThrow(() -> new GroupNotFoundException("Group with id " + id + " not found."));
         return groupMapper.map(group);
     }

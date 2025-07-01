@@ -1,9 +1,9 @@
 package com.example.LearningManageSystem.mapper;
 
 import com.example.LearningManageSystem.dto.ScheduleDTO;
-import com.example.LearningManageSystem.model.Schedule;
+import com.example.LearningManageSystem.model.ScheduleEntity;
 
 public interface ScheduleMapper {
-    ScheduleDTO map(Schedule schedule);
-    Schedule map(ScheduleDTO scheduleDTO);
+    ScheduleDTO map(ScheduleEntity schedule);
+    ScheduleEntity map(ScheduleDTO scheduleDTO);
 }

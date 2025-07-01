@@ -6,8 +6,8 @@ import com.example.LearningManageSystem.dto.CourseDTO;
 import com.example.LearningManageSystem.dto.ScheduleDTO;
 import com.example.LearningManageSystem.exception.CourseNotFoundException;
 import com.example.LearningManageSystem.mapper.CourseMapper;
-import com.example.LearningManageSystem.model.Course;
-import com.example.LearningManageSystem.model.Schedule;
+import com.example.LearningManageSystem.model.CourseEntity;
+import com.example.LearningManageSystem.model.ScheduleEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,24 +24,24 @@ public class CourseService {
     private final ScheduleRepository scheduleRepository;
 
     public CourseDTO addCourse(CourseDTO courseDTO) {
-        Course course = courseMapper.map(courseDTO);
-        Course savedCourse = courseRepository.save(course);
+        CourseEntity course = courseMapper.map(courseDTO);
+        CourseEntity savedCourse = courseRepository.save(course);
         return courseMapper.map(savedCourse);
     }
 
     @Transactional
     public CourseDTO createCourseWithSchedule(CourseDTO courseDTO, ScheduleDTO scheduleDTO) {
-        Course course = new Course();
+        CourseEntity course = new CourseEntity();
         course.setName(courseDTO.getName());
         course.setDescription(courseDTO.getDescription());
 
-        Course savedCourse = courseRepository.save(course);
+        CourseEntity savedCourse = courseRepository.save(course);
 
-        Schedule schedule = new Schedule();
+        ScheduleEntity schedule = new ScheduleEntity();
         schedule.setCourse(savedCourse);
         schedule.setDate(scheduleDTO.getDate());
 
-        Schedule savedSchedule = scheduleRepository.save(schedule);
+        ScheduleEntity savedSchedule = scheduleRepository.save(schedule);
 
         courseDTO.setId(savedCourse.getId());
         courseDTO.setScheduleIds(Set.of(savedSchedule.getId()));
@@ -57,18 +57,18 @@ public class CourseService {
     }
 
     public CourseDTO updateCourse(Long id, CourseDTO courseDTO) {
-        Course course = courseRepository.findById(id)
+        CourseEntity course = courseRepository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Course with id " + id + " not found."));
 
         course.setName(courseDTO.getName());
         course.setDescription(courseDTO.getDescription());
 
-        Course updatedCourse = courseRepository.save(course);
+        CourseEntity updatedCourse = courseRepository.save(course);
         return courseMapper.map(updatedCourse);
     }
 
     public CourseDTO getCourseById(Long id) {
-        Course course = courseRepository.findById(id)
+        CourseEntity course = courseRepository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Course with id " + id + " not found."));
         return courseMapper.map(course);
     }

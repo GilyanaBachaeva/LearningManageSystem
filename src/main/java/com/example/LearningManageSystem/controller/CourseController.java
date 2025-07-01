@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseController {
 
-    final CourseService courseService;
+    private final CourseService courseService;
 
     @PostMapping
     public ResponseEntity<CourseDTO> addCourse(@RequestBody CourseDTO courseDTO) {

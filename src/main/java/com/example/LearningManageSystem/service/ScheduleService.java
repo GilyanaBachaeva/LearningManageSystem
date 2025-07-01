@@ -4,7 +4,7 @@ import com.example.LearningManageSystem.dao.ScheduleRepository;
 import com.example.LearningManageSystem.dto.ScheduleDTO;
 import com.example.LearningManageSystem.exception.ScheduleNotFoundException;
 import com.example.LearningManageSystem.mapper.ScheduleMapper;
-import com.example.LearningManageSystem.model.Schedule;
+import com.example.LearningManageSystem.model.ScheduleEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final ScheduleMapper scheduleMapper;
 
-    public Schedule addSchedule(ScheduleDTO scheduleDTO) {
-        Schedule schedule = scheduleMapper.map(scheduleDTO);
+    public ScheduleEntity addSchedule(ScheduleDTO scheduleDTO) {
+        ScheduleEntity schedule = scheduleMapper.map(scheduleDTO);
         return scheduleRepository.save(schedule);
     }
 
@@ -29,21 +29,21 @@ public class ScheduleService {
         scheduleRepository.deleteById(id);
     }
 
-    public Schedule updateSchedule(Long id, ScheduleDTO scheduleDTO) {
+    public ScheduleEntity updateSchedule(Long id, ScheduleDTO scheduleDTO) {
         if (!scheduleRepository.existsById(id)) {
             throw new ScheduleNotFoundException("Schedule with id " + id + " not found.");
         }
-        Schedule schedule = scheduleMapper.map(scheduleDTO);
+        ScheduleEntity schedule = scheduleMapper.map(scheduleDTO);
         schedule.setId(id);
         return scheduleRepository.save(schedule);
     }
 
-    public List<Schedule> getSchedulesByGroup(Long groupId) {
+    public List<ScheduleEntity> getSchedulesByGroup(Long groupId) {
         return scheduleRepository.findByGroupId(groupId);
     }
 
     public ScheduleDTO getScheduleById(Long id) {
-        Schedule schedule = scheduleRepository.findById(id)
+        ScheduleEntity schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new ScheduleNotFoundException("Schedule with id " + id + " not found."));
         return scheduleMapper.map(schedule);
     }

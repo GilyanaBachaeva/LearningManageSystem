@@ -1,7 +1,7 @@
 package com.example.LearningManageSystem.controller;
 
 import com.example.LearningManageSystem.dto.ScheduleDTO;
-import com.example.LearningManageSystem.model.Schedule;
+import com.example.LearningManageSystem.model.ScheduleEntity;
 import com.example.LearningManageSystem.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +17,8 @@ public class ScheduleController {
     final ScheduleService scheduleService;
 
     @PostMapping
-    public ResponseEntity<Schedule> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        Schedule createdSchedule = scheduleService.addSchedule(scheduleDTO);
+    public ResponseEntity<ScheduleEntity> addSchedule(@RequestBody ScheduleDTO scheduleDTO) {
+        ScheduleEntity createdSchedule = scheduleService.addSchedule(scheduleDTO);
         return ResponseEntity.ok(createdSchedule);
     }
 
@@ -29,8 +29,8 @@ public class ScheduleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Schedule> updateSchedule(@PathVariable Long id, @RequestBody ScheduleDTO scheduleDTO) {
-        Schedule updatedSchedule = scheduleService.updateSchedule(id, scheduleDTO);
+    public ResponseEntity<ScheduleEntity> updateSchedule(@PathVariable Long id, @RequestBody ScheduleDTO scheduleDTO) {
+        ScheduleEntity updatedSchedule = scheduleService.updateSchedule(id, scheduleDTO);
         return ResponseEntity.ok(updatedSchedule);
     }
 
@@ -47,8 +47,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/group/{groupId}")
-    public ResponseEntity<List<Schedule>> getSchedulesByGroup(@PathVariable Long groupId) {
-        List<Schedule> schedules = scheduleService.getSchedulesByGroup(groupId);
+    public ResponseEntity<List<ScheduleEntity>> getSchedulesByGroup(@PathVariable Long groupId) {
+        List<ScheduleEntity> schedules = scheduleService.getSchedulesByGroup(groupId);
         return ResponseEntity.ok(schedules);
     }
 }

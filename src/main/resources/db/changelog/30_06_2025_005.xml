@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog>
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    ...
+    <changeSet id="5" author="gbachaeva">
+        <createTable tableName="schedule">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="group_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="teacher_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="course_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="schedule" baseColumnNames="group_id"
+                                 referencedTableName="group" referencedColumnNames="id"
+                                 constraintName="fk_schedule_group"/>
+        <addForeignKeyConstraint baseTableName="schedule" baseColumnNames="teacher_id"
+                                 referencedTableName="teacher" referencedColumnNames="id"
+                                 constraintName="fk_schedule_teacher"/>
+        <addForeignKeyConstraint baseTableName="schedule" baseColumnNames="course_id"
+                                 referencedTableName="course" referencedColumnNames="id"
+                                 constraintName="fk_schedule_course"/>
+    </changeSet>
+</databaseChangeLog>

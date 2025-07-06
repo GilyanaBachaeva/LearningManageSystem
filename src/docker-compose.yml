@@ -10,19 +10,5 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-
-  liquibase:
-    image: liquibase/liquibase
-    container_name: lms_liquibase
-    environment:
-      LIQUIBASE_CHANGELOG: classpath:db/changelog/db.changelog-master.yaml
-      LIQUIBASE_URL: jdbc:postgresql://db:5432/lms_db
-      LIQUIBASE_USERNAME: lms_user
-      LIQUIBASE_PASSWORD: lms_password
-    depends_on:
-      - db
-    volumes:
-      - ./src/main/resources/db/changelog:/liquibase/changelog
-
 volumes:
   db_data:

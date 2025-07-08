@@ -33,6 +33,7 @@ dependencies {
 	implementation("org.slf4j:slf4j-api:1.7.30")
 	implementation("ch.qos.logback:logback-classic:1.2.3")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
 }
 
 tasks.withType<Test> {

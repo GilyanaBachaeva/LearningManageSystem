@@ -30,10 +30,13 @@ dependencies {
 	implementation("org.mapstruct:mapstruct:1.5.3.Final")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
 	implementation("org.liquibase:liquibase-core")
-	implementation("org.slf4j:slf4j-api:1.7.30")
-	implementation("ch.qos.logback:logback-classic:1.2.3")
+	//implementation("org.slf4j:slf4j-api:1.7.30")
+	//implementation("ch.qos.logback:logback-classic:1.2.3")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
+	testImplementation("org.testcontainers:junit-jupiter:1.17.3")
+	testImplementation("org.testcontainers:postgresql:1.17.3")
+//
 }
 
 tasks.withType<Test> {

@@ -10,5 +10,4 @@ public class LearningManageSystemApplication {
 		System.out.println("Hello");
 		SpringApplication.run(LearningManageSystemApplication.class, args);
 	}
-
 }

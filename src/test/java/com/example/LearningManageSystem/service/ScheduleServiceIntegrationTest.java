@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class ScheduleServiceIntegrationTest {
+public class ScheduleServiceIntegrationTest extends AbstractIT{
 
 	@Autowired
 	private ScheduleService scheduleService;

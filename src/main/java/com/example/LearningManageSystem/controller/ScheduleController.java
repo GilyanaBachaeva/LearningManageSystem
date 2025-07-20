@@ -76,10 +76,10 @@ public class ScheduleController {
 
     @GetMapping("/group/{groupId}")
     @ApiOperation(value = "Get Schedule by Group", notes = "Returns information about a schedule by groups ID")
-    public ResponseEntity<List<ScheduleEntity>> getSchedulesByGroup(@ApiParam(value = "Group ID", required = true)
+    public ResponseEntity<List<ScheduleDTO>> getSchedulesByGroup(@ApiParam(value = "Group ID", required = true)
                                                                     @PathVariable Long groupId) {
         log.info("Request to get schedule");
-        List<ScheduleEntity> schedules = scheduleService.getSchedulesByGroup(groupId);
+        List<ScheduleDTO> schedules = scheduleService.getSchedulesByGroup(groupId);
         log.info("Schedule for this group found: {}", schedules);
         return ResponseEntity.ok(schedules);
     }

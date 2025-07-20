@@ -25,8 +25,8 @@ public class AbstractIT {
 
     @DynamicPropertySource
     public static void overrideProperties(DynamicPropertyRegistry dynamicPropertyRegistry) {
-        dynamicPropertyRegistry.add("DB_URL", postgreSQLContainer::getJdbcUrl);
-        dynamicPropertyRegistry.add("DB_USERNAME", postgreSQLContainer::getUsername);
-        dynamicPropertyRegistry.add("DB_PASSWORD", postgreSQLContainer::getPassword);
+        dynamicPropertyRegistry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+        dynamicPropertyRegistry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+        dynamicPropertyRegistry.add("spring.datasource.password", postgreSQLContainer::getPassword);
     }
 }

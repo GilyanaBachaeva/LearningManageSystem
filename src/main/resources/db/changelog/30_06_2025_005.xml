@@ -7,7 +7,7 @@
 
     <changeSet id="5" author="gbachaeva">
         <createTable tableName="schedule">
-            <column name="id" type="bigint">
+            <column name="id" type="bigserial">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="group_id" type="bigint">

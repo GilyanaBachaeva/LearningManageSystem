@@ -24,7 +24,7 @@ public class ScheduleService {
         ScheduleEntity schedule = scheduleMapper.map(scheduleDTO);
         ScheduleEntity savedSchedule = scheduleRepository.save(schedule);
         log.info("Schedule added successfully: {}", savedSchedule);
-        return scheduleRepository.save(schedule);
+        return savedSchedule;
     }
 
     public void deleteSchedule(Long id) {
@@ -50,9 +50,9 @@ public class ScheduleService {
         return updatedSchedule;
     }
 
-    public List<ScheduleEntity> getSchedulesByGroup(Long groupId) {
+    public List<ScheduleDTO> getSchedulesByGroup(Long groupId) {
         log.info("Requesting schedules for group with ID: {}", groupId);
-        List<ScheduleEntity> schedules = scheduleRepository.findByGroupId(groupId);
+        List<ScheduleDTO> schedules = scheduleRepository.findByGroupId(groupId);
         log.info("Number of schedules found: {}", schedules.size());
         return schedules;
     }

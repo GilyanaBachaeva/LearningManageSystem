@@ -1,5 +1,6 @@
 plugins {
 	java
+	application
 	id("org.springframework.boot") version "3.4.7"
 	id("io.spring.dependency-management") version "1.1.7"
 }
@@ -37,6 +38,10 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter:1.17.3")
 	testImplementation("org.testcontainers:postgresql:1.17.3")
 //
+}
+
+tasks.bootJar {
+	mainClass.set("com.example.LearningManageSystem.LearningManageSystemApplication")
 }
 
 tasks.withType<Test> {

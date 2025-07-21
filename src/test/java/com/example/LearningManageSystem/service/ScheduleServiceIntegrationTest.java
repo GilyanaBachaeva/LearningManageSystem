@@ -69,6 +69,86 @@ public class ScheduleServiceIntegrationTest extends AbstractIT {
         addSchedules(groupId, teacherId2, courseId2, 3);
     }
 
+    @AfterEach
+    public void tearDown() {
+        courseRepository.deleteAll();
+        studentRepository.deleteAll();
+        teacherRepository.deleteAll();
+        groupRepository.deleteAll();
+        scheduleIds.clear();
+        scheduleDTOs.clear();
+    }
+
+    @Test
+    void testAddSchedules() {
+        for (ScheduleDTO scheduleDTO : scheduleDTOs) {
+            ResponseEntity<ScheduleEntity> response = restTemplate.postForEntity("/schedules",
+                    scheduleDTO, ScheduleEntity.class);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            scheduleIds.add(response.getBody().getId());
+        }
+    }
+
+    @Test
+    void testGetSchedules() {
+        testAddSchedules();
+        ResponseEntity<List<ScheduleDTO>> response = restTemplate.exchange(
+                "/schedules",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<ScheduleDTO>>() {}
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).hasSize(scheduleDTOs.size());
+    }
+
+    @Test
+    public void testDeleteSchedule() {
+        testAddSchedules();
+
+        Long scheduleId = scheduleIds.get(0);
+
+        ResponseEntity<Void> response = restTemplate.exchange(
+                "/schedules/" + scheduleId,
+                HttpMethod.DELETE,
+                null,
+                Void.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+        ResponseEntity<List<ScheduleDTO>> getResponse = restTemplate.exchange(
+                "/schedules",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<ScheduleDTO>>() {}
+        );
+        assertThat(getResponse.getBody()).hasSize(scheduleDTOs.size() - 1);
+    }
+
+    @Test
+    public void testAddScheduleWithInvalidData() {
+        ScheduleDTO invalidScheduleDTO = new ScheduleDTO();
+        invalidScheduleDTO.setGroupId(null);
+        invalidScheduleDTO.setTeacherId(null);
+        invalidScheduleDTO.setCourseId(null);
+        invalidScheduleDTO.setDate(LocalDateTime.now());
+
+        ResponseEntity<ScheduleEntity> response = restTemplate.postForEntity("/schedules",
+                invalidScheduleDTO, ScheduleEntity.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void testGetNonExistentSchedule() {
+        Long nonExistentScheduleId = 999L;
+
+        ResponseEntity<String> response = restTemplate.getForEntity("/schedules/" +
+                nonExistentScheduleId, String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
     private void addSchedules(Long groupId, Long teacherId, Long courseId, int startDay) {
         for (int i = 0; i < 3; i++) {
             ScheduleDTO scheduleDTO = new ScheduleDTO();
@@ -111,62 +191,5 @@ public class ScheduleServiceIntegrationTest extends AbstractIT {
         student.setGroup(group);
 
         studentRepository.save(student);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        courseRepository.deleteAll();
-        studentRepository.deleteAll();
-        teacherRepository.deleteAll();
-        groupRepository.deleteAll();
-        scheduleIds.clear();
-        scheduleDTOs.clear();
-    }
-
-    @Test
-    void testAddSchedules() {
-        for (ScheduleDTO scheduleDTO : scheduleDTOs) {
-            ResponseEntity<ScheduleEntity> response = restTemplate.postForEntity("/schedules", scheduleDTO, ScheduleEntity.class);
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            scheduleIds.add(response.getBody().getId());
-        }
-    }
-
-    @Test
-    void testGetSchedules() {
-        testAddSchedules();
-        ResponseEntity<List<ScheduleDTO>> response = restTemplate.exchange(
-                "/schedules",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<ScheduleDTO>>() {}
-        );
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).hasSize(scheduleDTOs.size());
-    }
-
-    @Test
-    public void testDeleteSchedule() {
-        testAddSchedules();
-
-        Long scheduleId = scheduleIds.get(0);
-
-        ResponseEntity<Void> response = restTemplate.exchange(
-                "/schedules/" + scheduleId,
-                HttpMethod.DELETE,
-                null,
-                Void.class
-        );
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-
-        ResponseEntity<List<ScheduleDTO>> getResponse = restTemplate.exchange(
-                "/schedules",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<ScheduleDTO>>() {}
-        );
-        assertThat(getResponse.getBody()).hasSize(scheduleDTOs.size() - 1);
     }
 }

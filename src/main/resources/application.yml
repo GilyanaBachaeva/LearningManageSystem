@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: LearningManageSystem
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lms_db
+    username: postgres
+    password: postgres
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml

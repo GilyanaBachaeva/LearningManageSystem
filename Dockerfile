@@ -11,7 +11,7 @@ RUN ./gradlew build --no-daemon
 RUN ./gradlew test --no-daemon
 
 # Этап 2: Запуск приложения
-FROM openjdk:17-slim
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=builder /app/build/libs/LearningManageSystem-0.0.1-SNAPSHOT.jar app.jar
 ENV SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/lms_db
